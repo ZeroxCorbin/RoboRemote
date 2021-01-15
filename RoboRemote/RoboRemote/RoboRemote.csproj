@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>TRACE;NEWTONSOFT</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Interfaces\ITMConnectionView.cs" />
+    <Compile Remove="Interfaces\ITMEthernetSlaveControlView.cs" />
+    <Compile Remove="Interfaces\ITMRemoteView.cs" />
+    <Compile Remove="View\3DView.xaml.cs" />
+    <Compile Remove="View\TMConnectionView.xaml.cs" />
+    <Compile Remove="View\TMEthernetSlaveControlView.xaml.cs" />
+    <Compile Remove="View\TMRemoteView.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="View\3DView.xaml" />
+    <EmbeddedResource Remove="View\TMConnectionView.xaml" />
+    <EmbeddedResource Remove="View\TMEthernetSlaveControlView.xaml" />
+    <EmbeddedResource Remove="View\TMRemoteView.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="tm_pendant.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\tm_pendant.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1874" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="View\ItemView.xaml.cs">
+      <DependentUpon>ItemView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

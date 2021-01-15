@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:RoboRemote"
+             x:Class="RoboRemote.View.TMRemoteView">
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+
+                <ColumnDefinition Width="0.7*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Label Grid.Row="0" Grid.RowSpan="4" Grid.ColumnSpan="7" HorizontalOptions="Center" Text="{Binding Title, Mode=OneWay}"  FontSize="Title" FontAttributes="Bold"/>
+
+            <Image Grid.Row="1" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="7" Source="{local:ImageResource RoboRemote.Resources.tm_pendant.png}"/>
+
+            <Button Grid.Row="2" Grid.Column="3" Command="{Binding ConnectCommand}" HeightRequest="{Binding ButtonHeight}" VerticalOptions="End" Opacity="0.1"/>
+            <Button Grid.Row="2" Grid.Column="5" Command="{Binding PlusCommand}" HeightRequest="{Binding ButtonHeight}" VerticalOptions="End" Opacity="0.1"/>
+           
+            <Button Grid.Row="3" Grid.Column="3" Command="{Binding StopCommand}" HeightRequest="{Binding ButtonHeight}" VerticalOptions="Start" Opacity="0.1"/>
+            <Button Grid.Row="3" Grid.Column="4" Command="{Binding PlayPauseCommand}" HeightRequest="{Binding ButtonHeight}" VerticalOptions="Start" Opacity="0.1"/>
+            <Button Grid.Row="3" Grid.Column="5" Command="{Binding MinusCommand}" HeightRequest="{Binding ButtonHeight}" VerticalOptions="Start" Opacity="0.1"/>
+
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

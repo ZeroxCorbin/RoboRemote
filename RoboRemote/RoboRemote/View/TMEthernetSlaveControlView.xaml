@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converter="clr-namespace:RoboRemote.Converters"
+             x:Class="RoboRemote.View.TMEthernetSlaveControlView" BackgroundColor="Black">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:EmptyStringToBoolConverter x:Key="EmptyToBool" />
+            <converter:EthernetSlaveIsByteTypeConverter x:Key="CheckIsByteType" />
+            <converter:EthernetSlaveIsIntTypeConverter x:Key="CheckIsIntType" />
+            <converter:EthernetSlaveIsFloatTypeConverter x:Key="CheckIsFloatType" />
+            <converter:EthernetSlaveIsBoolTypeConverter x:Key="CheckIsBoolType" />
+            <converter:EthernetSlaveIsStringTypeConverter x:Key="CheckIsStringType" />
+            <converter:EthernetSlaveCheckByteValueConverter x:Key="CheckByteValue" />
+            <converter:EthernetSlaveCheckIntValueConverter x:Key="CheckIntValue" />
+            <converter:EthernetSlaveCheckFloatValueConverter x:Key="CheckFloatValue" />
+            <converter:EthernetSlaveCheckStringValueConverter x:Key="CheckStringValue" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid BackgroundColor="Black" Margin="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" HorizontalOptions="Center" Text="{Binding Title, Mode=OneWay}" FontSize="Title" FontAttributes="Bold" TextColor="GhostWhite"/>
+
+            <Entry Grid.Row="1" Text="{Binding ConnectionString}" Placeholder="IP Address" BackgroundColor="Black" TextColor="GhostWhite"/>
+
+            <Grid Grid.Row="2" MinimumHeightRequest="28">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" WidthRequest="90" Text="{Binding ConnectButtonText}" Command="{Binding ConnectCommand}" IsEnabled="{Binding ConnectionString, Converter={StaticResource EmptyToBool}}" TextColor="White" BackgroundColor="SlateGray"/>
+                <ActivityIndicator Grid.Column="1" IsRunning="{Binding Heartbeat}" Color="LightBlue"/>
+            </Grid>
+
+
+            <ListView Grid.Row="4" ItemsSource="{Binding WriteableItems}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="15"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Grid.Column="0" VerticalTextAlignment="Center" Text="{Binding Name, Mode=OneWay}"  TextColor="White" BackgroundColor="Black" FontSize="Medium"/>
+                                    <Label Grid.Column="1" Text="=" VerticalTextAlignment="Center" TextColor="White" BackgroundColor="Black"/>
+                                    <Entry Grid.Column="2" PlaceholderColor="Gray" Placeholder="String" ClearButtonVisibility="WhileEditing" Text="{Binding Value, Converter={StaticResource CheckStringValue}}" TextColor="White" BackgroundColor="Black" IsVisible="{Binding Type, Mode=OneWay, Converter={StaticResource CheckIsStringType}}"/>
+                                    <Entry Grid.Column="2" PlaceholderColor="Gray" Placeholder="Byte" ClearButtonVisibility="WhileEditing" Text="{Binding Value, Converter={StaticResource CheckByteValue}}" TextColor="White" BackgroundColor="Black" Keyboard="Numeric" IsVisible="{Binding Type, Mode=OneWay, Converter={StaticResource CheckIsByteType}}"/>
+                                    <Entry Grid.Column="2" PlaceholderColor="Gray" Placeholder="Integer" ClearButtonVisibility="WhileEditing" Text="{Binding Value, Converter={StaticResource CheckIntValue}}" TextColor="White" BackgroundColor="Black" Keyboard="Numeric" IsVisible="{Binding Type, Mode=OneWay, Converter={StaticResource CheckIsIntType}}"/>
+                                    <Entry Grid.Column="2" PlaceholderColor="Gray" Placeholder="Float" ClearButtonVisibility="WhileEditing" Text="{Binding Value, Converter={StaticResource CheckFloatValue}}" TextColor="White" BackgroundColor="Black" Keyboard="Numeric" IsVisible="{Binding Type, Mode=OneWay, Converter={StaticResource CheckIsFloatType}}"/>
+                                    <Label Grid.Column="2" Text="True" VerticalTextAlignment="Center" TextColor="White" BackgroundColor="Black" IsVisible="{Binding Type, Mode=OneWay, Converter={StaticResource CheckIsBoolType}}"/>
+                                    <Button Grid.Column="3" Command="{Binding WriteItem}" Text="Write"/>
+                                </Grid>
+                            </ViewCell.View>
+
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

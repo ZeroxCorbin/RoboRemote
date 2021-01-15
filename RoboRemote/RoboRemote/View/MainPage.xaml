@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:RoboRemote.ViewModel"
+             xmlns:converter="clr-namespace:RoboRemote.Converters"
+             xmlns:tmcomms="clr-namespace:TM_Comms;assembly=TM_Comms"
+             x:Class="RoboRemote.View.MainPage">
+
+    <NavigationPage.TitleView>
+        <Label Text="{Binding Title}" VerticalOptions="CenterAndExpand"/>
+    </NavigationPage.TitleView>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:TMflowVersionConverter x:Key="TMflowVersion" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <viewmodel:MainPageViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <Grid Padding="10" BackgroundColor="{AppThemeBinding Light=White, Dark=Black}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Text="TM Connections" FontSize="Title"/>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Label Grid.Column="0" Text="TM Flow Version" VerticalOptions="CenterAndExpand"/>
+                    <Picker Grid.Column="1" ItemsSource="{Binding VersionNames}" SelectedItem="{Binding VersionString}" IsEnabled="{Binding VersionSelectEnable}"/>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Text="Modbus" Command="{Binding NavigateModbusControl}"/>
+                    <ActivityIndicator Grid.Column="1" WidthRequest="30" IsRunning="{Binding IsModbusConnected, Mode=OneWay}"/>
+                    
+                </Grid>
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Text="Ethernet Slave" Command="{Binding NavigateEthernetSlaveControl}" IsVisible="{Binding VersionString,Converter={StaticResource TMflowVersion}}"/>
+                    <ActivityIndicator Grid.Column="1" WidthRequest="30" IsRunning="{Binding IsEthernetSlaveConnected, Mode=OneWay}" IsVisible="{Binding VersionString,Converter={StaticResource TMflowVersion}}"/>
+
+                </Grid>
+            </Grid>
+    </ContentPage.Content>
+</ContentPage>
