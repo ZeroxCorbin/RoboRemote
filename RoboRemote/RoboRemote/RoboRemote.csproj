@@ -42,6 +42,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\SimpleModbus\SimpleModbus.csproj" />
+    <ProjectReference Include="..\..\..\SocketManager\SocketManager.csproj" />
+    <ProjectReference Include="..\..\..\TM_Comms\TM_Comms\TM_Comms.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="View\ItemView.xaml.cs">
       <DependentUpon>ItemView.xaml</DependentUpon>
     </Compile>
